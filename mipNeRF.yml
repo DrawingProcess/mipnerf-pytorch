@@ -102,4 +102,6 @@ dependencies:
     - tqdm==4.64.0
     - werkzeug==2.1.2
     - zipp==3.8.0
+    - pymcubes
+    - PlyData
 prefix: /home/bebeal/anaconda3/envs/mipNeRF

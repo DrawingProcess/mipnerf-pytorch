@@ -65,11 +65,12 @@ def get_config():
         config.density_noise = 1.0
 
     config.device = torch.device(config.device)
-    base_data_path = "data/nerf_llff_data/"
+    base_path = "/data/csj000714/repos/mipnerf-pytorch/"
+    base_data_path = base_path + "data/nerf_llff_data/"
     if config.dataset_name == "blender":
-        base_data_path = "data/nerf_synthetic/"
+        base_data_path = base_path + "data/nerf_synthetic/"
     elif config.dataset_name == "multicam":
-        base_data_path = "data/nerf_multiscale/"
+        base_data_path = base_path + "data/nerf_multiscale/"
     config.base_dir = path.join(base_data_path, config.scene)
 
     return config

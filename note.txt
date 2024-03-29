@@ -1,0 +1,5 @@
+python train.py --dataset_name llff --log_dir log/llff  --scene flower
+python visualize.py --dataset_name llff --model_weight_path log/llff/model.pt --log_dir log/llff --scene flower
+python extract_mesh.py --dataset_name llff --model_weight_path log/llff/model.pt --log_dir log/llff --scene flower
+
+python train.py --dataset_name multicam --log_dir log/multicam --batch_size 512

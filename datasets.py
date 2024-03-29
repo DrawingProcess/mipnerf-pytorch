@@ -212,12 +212,16 @@ class Multicam(NeRFDataset):
 
             xy = [res2grid(w, h) for w, h in zip(self.w, self.h)]
             pixel_directions = [np.stack([x, y, np.ones_like(x)], axis=-1) for x, y in xy]
-            camera_directions = [v @ p2c[:3, :3].T for v, p2c in zip(pixel_directions, self.pix2cam)]
-            directions = [v @ c2w[:3, :3].T for v, c2w in zip(camera_directions, self.cam_to_world)]
-            origins = [
-                np.broadcast_to(c2w[:3, -1], v.shape)
-                for v, c2w in zip(directions, self.cam_to_world)
-            ]
+            # issue: list indices must be integers or slices, not tuple(https://github.com/bebeal/mipnerf-pytorch/issues/6)
+            # camera_directions = [v @ p2c[:3, :3].T for v, p2c in zip(pixel_directions, self.pix2cam)]
+            # directions = [v @ c2w[:3, :3].T for v, c2w in zip(camera_directions, self.cam_to_world)]
+            # origins = [
+            #     np.broadcast_to(c2w[:3, -1], v.shape)
+            #     for v, c2w in zip(directions, self.cam_to_world)
+            # ]
+            camera_directions = [v @ np.array(p2c)[:3, :3].T for v, p2c in zip(pixel_directions, self.pix2cam)]
+            directions = [v @ np.array(c2w)[:3, :3].T for v, c2w in zip(camera_directions, self.cam_to_world)]
+            origins = [np.broadcast_to(np.array(c2w)[:3, -1], v.shape) for v, c2w in zip(directions, self.cam_to_world)]
             viewdirs = [
                 v / np.linalg.norm(v, axis=-1, keepdims=True) for v in directions
             ]

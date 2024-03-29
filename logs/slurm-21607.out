@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+
+#SBATCH -J test-run
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-gpu=8
+#SBATCH --mem-per-gpu=32G
+#SBATCH -p batch_ugrad
+#SBATCH -t 1-0
+#SBATCH -o logs/slurm-%A.out
+
+cat sbatch.sh
+pwd
+which python
+hostname
+python train.py --dataset_name llff --log_dir log/llff
+exit 0
+/data/csj000714/repos/mipnerf-pytorch
+/data/csj000714/anaconda3/envs/mipNeRF/bin/python
+aurora-g3
+Loading Training Poses
+Traceback (most recent call last):
+  File "train.py", line 104, in <module>
+    train_model(config)
+  File "train.py", line 20, in train_model
+    data = iter(cycle(get_dataloader(dataset_name=config.dataset_name, base_dir=config.base_dir, split="train", factor=config.factor, batch_size=config.batch_size, shuffle=True, device=config.device)))
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 19, in get_dataloader
+    d = get_dataset(dataset_name, base_dir, split, factor, device)
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 14, in get_dataset
+    d = dataset_dict[dataset_name](base_dir, split, factor=factor, device=device)
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 294, in __init__
+    super(LLFF, self).__init__(base_dir, split, spherify=spherify, near=near, far=far, white_bkgd=white_bkgd, factor=factor, device=device)
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 58, in __init__
+    self.load()
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 64, in load
+    self.generate_training_rays()
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 352, in generate_training_rays
+    self.generate_training_poses()
+  File "/data/csj000714/repos/mipnerf-pytorch/datasets.py", line 304, in generate_training_poses
+    for f in sorted(os.listdir(img_dir))
+FileNotFoundError: [Errno 2] No such file or directory: '/data/csj000714/repos/mipnerf-pytorch/data/nerf_llff_data/lego/images_4'
