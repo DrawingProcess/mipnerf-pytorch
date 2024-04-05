@@ -268,6 +268,7 @@ class Blender(NeRFDataset):
             meta = json.load(fp)
         images = []
         cams = []
+        print("nums of frames: ", len(meta['frames']))
         for i in range(len(meta['frames'])):
             frame = meta['frames'][i]
             fname = os.path.join(self.base_dir, frame['file_path'] + '.png')
