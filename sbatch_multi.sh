@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-#SBATCH -J mipnerf-multicam
+#SBATCH -J mipnerf-multicam-multi
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-gpu=12
 #SBATCH --mem-per-gpu=48G
@@ -29,7 +29,7 @@ hostname
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego80/model.pt --log_dir log/blender/lego80 --scene lego 
 # python extract_mesh.py --model_weight_path log/blender/lego80/model.pt --log_dir log/blender/lego80
 
-python train.py --dataset_name multicam --log_dir log/multicam/lego 
+python train.py --dataset_name multicam --log_dir log/multicam/lego --continue_training
 python visualize.py --dataset_name multicam --model_weight_path log/multicam/lego/model.pt --log_dir log/multicam/lego --scene lego 
 python extract_mesh.py --model_weight_path log/multicam/lego/model.pt --log_dir log/multicam/lego
 
