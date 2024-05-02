@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-#SBATCH -J mipnerf-blender-lego_gau_25_2-80
+#SBATCH -J mipnerf-blender-eval_depth-lego_left
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-gpu=8
 #SBATCH --mem-per-gpu=32G
@@ -20,6 +20,7 @@ hostname
 # python extract_mesh.py --model_weight_path log/llff/flower/model.pt --log_dir log/llff/flower
 
 # # dataset 
+# python train.py --dataset_name blender --log_dir log/blender/lego_top --scene lego --max_steps '40_000'
 # python train.py --dataset_name blender --log_dir log/blender/lego
 # python train.py --dataset_name blender --log_dir log/blender/lego_gau_25_2 --scene lego_gau_25_2
 # python train.py --dataset_name blender --log_dir log/blender/lego_gau_25_2_80 --scene lego_gau_25_2 --max_steps '160_000'
@@ -28,7 +29,13 @@ hostname
 # python train.py --dataset_name blender --log_dir log/blender/lego60 --max_steps '120_000'
 # python train.py --dataset_name blender --log_dir log/blender/lego80 --max_steps '160_000'
 
-python eval.py --dataset_name blender --log_dir log/blender/lego_gau_25_2_80 --scene lego_gau_25_2 --continue_training
+# python eval.py --dataset_name blender --log_dir log/blender/lego_gau_25_2_80 --scene lego_gau_25_2 --continue_training
+# python eval_depth.py --dataset_name blender --log_dir log/blender/lego20 --scene lego --continue_training
+# python eval_depth.py --dataset_name blender --log_dir log/blender/lego_front --scene lego --continue_training
+# python eval_depth.py --dataset_name blender --log_dir log/blender/lego_back --scene lego --continue_training
+# python eval_depth.py --dataset_name blender --log_dir log/blender/lego_right --scene lego --continue_training
+# python eval_depth.py --dataset_name blender --log_dir log/blender/lego_left --scene lego --continue_training
+python eval_depth.py --dataset_name blender --log_dir log/blender/lego_top --scene lego --continue_training
 
 
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego20/model.pt --log_dir log/blender/lego20 --scene lego --visualize_depth --visualize_normals
@@ -38,6 +45,17 @@ python eval.py --dataset_name blender --log_dir log/blender/lego_gau_25_2_80 --s
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego/model.pt --log_dir log/blender/lego --scene lego --visualize_depth --visualize_normals
 # python visualize.py --dataset_name multicam --model_weight_path log/multicam/lego/model.pt --log_dir log/multicam/lego --scene lego --visualize_depth --visualize_normals
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego_gau_25_2/model.pt --log_dir log/blender/lego_gau_25_2 --scene lego 
+
+# python visualize.py --dataset_name blender --model_weight_path log/blender/lego_front/model.pt --log_dir log/blender/lego_front --scene lego --visualize_depth --visualize_normals
+# python visualize.py --dataset_name blender --model_weight_path log/blender/lego_back/model.pt --log_dir log/blender/lego_back --scene lego --visualize_depth --visualize_normals
+# python visualize.py --dataset_name blender --model_weight_path log/blender/lego_right/model.pt --log_dir log/blender/lego_right --scene lego --visualize_depth --visualize_normals
+# python visualize.py --dataset_name blender --model_weight_path log/blender/lego_left/model.pt --log_dir log/blender/lego_left --scene lego --visualize_depth --visualize_normals
+# python visualize.py --dataset_name blender --model_weight_path log/blender/lego_top/model.pt --log_dir log/blender/lego_top --scene lego --visualize_depth --visualize_normals
+# python extract_mesh.py --model_weight_path log/blender/lego_front/model.pt --log_dir log/blender/lego_front --scene lego 
+# python extract_mesh.py --model_weight_path log/blender/lego_back/model.pt --log_dir log/blender/lego_back --scene lego 
+# python extract_mesh.py --model_weight_path log/blender/lego_right/model.pt --log_dir log/blender/lego_right --scene lego 
+# python extract_mesh.py --model_weight_path log/blender/lego_left/model.pt --log_dir log/blender/lego_left --scene lego 
+# python extract_mesh.py --model_weight_path log/blender/lego_top/model.pt --log_dir log/blender/lego_top --scene lego 
 
 # python extract_mesh.py --model_weight_path log/blender/lego/model.pt --log_dir log/blender/lego --scene lego 
 # python extract_mesh.py --model_weight_path log/blender/lego_gau_25_2/model.pt --log_dir log/blender/lego_gau_25_2 
