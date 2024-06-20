@@ -293,6 +293,44 @@ class Blender(NeRFDataset):
         self.focal = .5 * self.w / np.tan(.5 * camera_angle_x)
         self.n_poses = self.images.shape[0]
 
+class Custom(NeRFDataset):
+    """Blender Dataset."""
+    def __init__(self, base_dir, split, factor=1, spherify=False, white_bkgd=True, near=2, far=6, radius=4, radii=1, h=800, w=800, device=torch.device("cpu")):
+        super(Custom, self).__init__(base_dir, split, factor=factor, spherify=spherify, near=near, far=far, white_bkgd=white_bkgd, radius=radius, radii=radii, h=h, w=w, device=device)
+
+    def generate_training_poses(self):
+        """Load data from disk"""
+        split_dir = self.split
+        with open(path.join(self.base_dir, 'transforms.json'.format(split_dir)), 'r') as fp:
+            meta = json.load(fp)
+        images = []
+        cams = []
+        print("nums of frames: ", len(meta['frames']))
+        for i in range(len(meta['frames'])):
+            frame = meta['frames'][i]
+            fname = os.path.join(self.base_dir, frame['file_path'])
+            with open(fname, 'rb') as imgin:
+                image = np.array(Image.open(imgin), dtype=np.float32) / 255.
+                if self.factor >= 2:
+                    [halfres_h, halfres_w] = [hw // 2 for hw in image.shape[:2]]
+                    image = cv2.resize(
+                        image, (halfres_w, halfres_h), interpolation=cv2.INTER_AREA)
+            cams.append(np.array(frame['transform_matrix'], dtype=np.float32))
+            images.append(image)
+        self.images = np.stack(np.array(images), axis=0)
+        if self.white_bkgd:
+            self.images = (
+                    self.images[..., :3] * self.images[..., -1:] +
+                    (1. - self.images[..., -1:]))
+        else:
+            self.images = self.images[..., :3]
+        self.h, self.w = self.images.shape[1:3]
+        self.cam_to_world = np.stack(cams, axis=0)
+        # camera_angle_x = float(meta['camera_angle_x'])
+        # self.focal = .5 * self.w / np.tan(.5 * camera_angle_x)\
+        self.focal = float(meta['fl_x'])
+        self.n_poses = self.images.shape[0]
+
 
 class LLFF(NeRFDataset):
     def __init__(self, base_dir, split, factor=4, spherify=False, near=0, far=1, white_bkgd=False, device=torch.device("cpu")):
@@ -476,6 +514,7 @@ class LLFF(NeRFDataset):
 
 
 dataset_dict = {
+    'custom': Custom,
     'blender': Blender,
     'llff': LLFF,
     'multicam': Multicam,

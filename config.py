@@ -71,6 +71,8 @@ def get_config():
         base_data_path = base_path + "data/nerf_synthetic/"
     elif config.dataset_name == "multicam":
         base_data_path = base_path + "data/nerf_multiscale/"
+    elif config.dataset_name == "custom":
+        base_data_path = "/data/csj000714/data/nerf_custom/"
     config.base_dir = path.join(base_data_path, config.scene)
 
     return config
