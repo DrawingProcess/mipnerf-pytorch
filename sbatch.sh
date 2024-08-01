@@ -15,7 +15,7 @@ pwd
 which python
 hostname
 
-# python train.py --dataset_name custom --log_dir log/custom/240516_classroom1_inpainting --scene 240516_classroom1_inpainting
+python train.py --dataset_name custom --log_dir log/custom/240516_classroom1_inpainting --scene 240516_classroom1_inpainting
 # python train.py --dataset_name llff --log_dir log/llff/flower --scene flower 
 # python visualize.py --dataset_name llff --model_weight_path log/llff/flower/model.pt --log_dir log/llff/flower --scene flower 
 # python extract_mesh.py --model_weight_path log/llff/flower/model.pt --log_dir log/llff/flower
@@ -38,7 +38,6 @@ hostname
 # python eval_depth.py --dataset_name blender --log_dir log/blender/lego_left --scene lego --continue_training
 # python eval_depth.py --dataset_name blender --log_dir log/blender/lego_top --scene lego --continue_training
 
-python visualize.py --dataset_name custom --model_weight_path log/custom/240516_classroom1_inpainting/model.pt --log_dir log/custom/240516_classroom1_inpainting --scene 240516_classroom1_inpainting --visualize_depth --visualize_normals
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego20/model.pt --log_dir log/blender/lego20 --scene lego --visualize_depth --visualize_normals
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego40/model.pt --log_dir log/blender/lego40 --scene lego --visualize_depth --visualize_normals
 # python visualize.py --dataset_name blender --model_weight_path log/blender/lego60/model.pt --log_dir log/blender/lego60 --scene lego --visualize_depth --visualize_normals
