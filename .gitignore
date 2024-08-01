@@ -1,5 +1,6 @@
 data/
 log/
+logs/
 __pycache__/
 model_saves/
 .idea/
